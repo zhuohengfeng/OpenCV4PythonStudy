@@ -1,5 +1,5 @@
 import cv2
-from managers import WindowManager, CaptureManager
+from Chapter01.Cameo.managers import CaptureManager,WindowManager
 
 class Cameo(object):
     

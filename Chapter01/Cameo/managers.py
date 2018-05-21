@@ -11,7 +11,7 @@ class CaptureManager(object):
         self.previewWindowManager = previewWindowManager
         self.shouldMirrorPreview = shouldMirrorPreview
         
-        self._capture = capture
+        self._capture = capture #cv2.VideoCapture
         self._channel = 0
         self._enteredFrame = False
         self._frame = None
@@ -21,7 +21,7 @@ class CaptureManager(object):
         self._videoWriter = None
         
         self._startTime = None
-        self._framesElapsed = long(0)
+        self._framesElapsed = int(0)
         self._fpsEstimate = None
     
     @property
@@ -37,6 +37,12 @@ class CaptureManager(object):
     @property
     def frame(self):
         if self._enteredFrame and self._frame is None:
+            #1. “_”作为临时性的名称使用。这样，当其他人阅读你的代码时将会知道，你分配了一个特定的名称，但是并不会在后面再次用到该名称
+            #2. grab（捕获下一帧）和retrieve（对该帧进行解码）操作
+            #3. retrieve解码并且返回刚刚抓取的视频帧，假如没有视频帧被捕获（相机没有连接或者视频文件中没有更多的帧）将返回false。
+            #4. read()该函数结合VideoCapture::grab()和VideoCapture::retrieve()其中之一被调用，
+            # 用于捕获、解码和返回下一个视频帧这是一个最方便的函数对于读取视频文件或者捕获数据从解码和返回刚刚捕获的帧，
+            # 假如没有视频帧被捕获（相机没有连接或者视频文件中没有更多的帧）将返回false。
             _, self._frame = self._capture.retrieve(channel = self.channel)
         return self._frame
     
