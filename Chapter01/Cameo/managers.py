@@ -43,7 +43,7 @@ class CaptureManager(object):
             #4. read()该函数结合VideoCapture::grab()和VideoCapture::retrieve()其中之一被调用，
             # 用于捕获、解码和返回下一个视频帧这是一个最方便的函数对于读取视频文件或者捕获数据从解码和返回刚刚捕获的帧，
             # 假如没有视频帧被捕获（相机没有连接或者视频文件中没有更多的帧）将返回false。
-            _, self._frame = self._capture.retrieve(channel = self.channel)
+            _, self._frame = self._capture.retrieve(flag = self.channel)
         return self._frame
     
     @property
@@ -107,7 +107,7 @@ class CaptureManager(object):
     
     def startWritingVideo(
             self, filename,
-            encoding = cv2.cv.CV_FOURCC('M','J','P','G')):
+            encoding = cv2.VideoWriter_fourcc(*'MJPG')): #cv2.cv.CV_FOURCC('M','J','P','G')):
         """Start writing exited frames to a video file."""
         self._videoFilename = filename
         self._videoEncoding = encoding
